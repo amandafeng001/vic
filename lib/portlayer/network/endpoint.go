@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/vmware/vic/pkg/ip"
-	"github.com/vmware/vic/pkg/uid"
 )
 
 type alias struct {
@@ -38,6 +38,7 @@ type Endpoint struct {
 	static    bool
 	ports     map[Port]interface{} // exposed ports
 	aliases   map[string][]alias
+	id        string
 }
 
 // scopeName returns the "fully qualified" name of an alias. Aliases are scoped
@@ -71,6 +72,7 @@ func newEndpoint(container *Container, scope *Scope, eip *net.IP, pciSlot *int32
 		static:    false,
 		ports:     make(map[Port]interface{}),
 		aliases:   make(map[string][]alias),
+		id:        stringid.GenerateRandomID(),
 	}
 
 	if eip != nil && !ip.IsUnspecifiedIP(*eip) {
@@ -118,8 +120,8 @@ func (e *Endpoint) Container() *Container {
 	return e.container
 }
 
-func (e *Endpoint) ID() uid.UID {
-	return e.container.ID()
+func (e *Endpoint) ID() string {
+	return e.id
 }
 
 func (e *Endpoint) Name() string {

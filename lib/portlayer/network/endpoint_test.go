@@ -35,7 +35,7 @@ func TestEndpointNameID(t *testing.T) {
 		ports:     make(map[Port]interface{}),
 	}
 
-	assert.Equal(t, c.ID(), e.ID())
+	assert.NotEqual(t, c.ID(), e.ID())
 	assert.Equal(t, c.Name(), e.Name())
 }
 

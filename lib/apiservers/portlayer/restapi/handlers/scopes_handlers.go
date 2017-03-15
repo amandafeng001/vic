@@ -390,8 +390,8 @@ func toEndpointConfig(e *network.Endpoint) *models.EndpointConfig {
 
 	return &models.EndpointConfig{
 		Address:   addr,
-		Container: e.ID().String(),
-		ID:        e.ID().String(),
+		Container: e.Container().ID().String(),
+		ID:        e.ID(),
 		Name:      e.Name(),
 		Scope:     e.Scope().Name(),
 		Ports:     ecports,
